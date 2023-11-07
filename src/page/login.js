@@ -1,72 +1,122 @@
-import React from "react";
-import { TextField, Button, Grid, Container } from "@mui/material";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import FormTitle from "../components/title/form-title";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import UserLayout from "../layout/userLayout";
 
-const Login = () => {
-  const initialValues = {
-    email: "",
-    password: "",
-  };
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
+// TODO remove, this demo shouldn't need to reset the theme.
 
-  const handleSubmit = (values) => {
-    // Handle submission logic here, for instance, you can make an API call to authenticate the user.
-    console.log("Form submitted with values:", values);
+const defaultTheme = createTheme();
+
+export default function SignIn() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
-    <Container maxWidth="xs">
-      <FormTitle title={"Login"}/>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <Field
-                  as={TextField}
-                  name="email"
-                  label="Email"
-                  variant="outlined"
-                  error={errors.email && touched.email}
-                  helperText={errors.email && touched.email ? errors.email : ""}
-                  fullWidth
-                />
+    <UserLayout>
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
               </Grid>
               <Grid item>
-                <Field
-                  as={TextField}
-                  type="password"
-                  name="password"
-                  label="Password"
-                  variant="outlined"
-                  error={errors.password && touched.password}
-                  helperText={
-                    errors.password && touched.password ? errors.password : ""
-                  }
-                  fullWidth
-                />
-              </Grid>
-              <Grid item>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
-                  Login
-                </Button>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
               </Grid>
             </Grid>
-          </Form>
-        )}
-      </Formik>
-    </Container>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </UserLayout>
   );
-};
-
-export default Login;
+}

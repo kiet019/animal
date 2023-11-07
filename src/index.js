@@ -3,13 +3,19 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { CssBaseline, createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const defaultTheme = createTheme();
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

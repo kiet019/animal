@@ -1,106 +1,133 @@
-import React from "react";
-import { TextField, Button, Grid, Container } from "@mui/material";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import FormTitle from "../components/title/form-title";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import UserLayout from "../layout/userLayout";
 
-const SignupForm = () => {
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    username: "",
-    password: "",
-  };
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
-  });
+// TODO remove, this demo shouldn't need to reset the theme.
 
-  const handleSubmit = (values) => {
-    // Handle submission logic here
-    console.log("Form submitted with values:", values);
+export default function SignUp() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
-    <Container maxWidth="xs">
-      <FormTitle title={"Sign Up"}/>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <Field
-                  as={TextField}
+    <UserLayout>
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
                   name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
                   label="First Name"
-                  variant="outlined"
-                  error={errors.firstName && touched.firstName}
-                  helperText={
-                    errors.firstName && touched.firstName
-                      ? errors.firstName
-                      : ""
-                  }
-                  fullWidth
+                  autoFocus
                 />
               </Grid>
-              <Grid item>
-                <Field
-                  as={TextField}
-                  name="lastName"
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
                   label="Last Name"
-                  variant="outlined"
-                  error={errors.lastName && touched.lastName}
-                  helperText={
-                    errors.lastName && touched.lastName ? errors.lastName : ""
-                  }
-                  fullWidth
+                  name="lastName"
+                  autoComplete="family-name"
                 />
               </Grid>
-              <Grid item>
-                <Field
-                  as={TextField}
-                  name="username"
-                  label="Username"
-                  variant="outlined"
-                  error={errors.username && touched.username}
-                  helperText={
-                    errors.username && touched.username ? errors.username : ""
-                  }
+              <Grid item xs={12}>
+                <TextField
+                  required
                   fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                 />
               </Grid>
-              <Grid item>
-                <Field
-                  as={TextField}
-                  type="password"
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
-                  variant="outlined"
-                  error={errors.password && touched.password}
-                  helperText={
-                    errors.password && touched.password ? errors.password : ""
-                  }
-                  fullWidth
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
                 />
               </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Button type="submit" variant="contained" color="primary" fullWidth >
-                  Sign Up
-                </Button>
+                <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link>
               </Grid>
             </Grid>
-          </Form>
-        )}
-      </Formik>
-    </Container>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </UserLayout>
   );
-};
-
-export default SignupForm;
+}

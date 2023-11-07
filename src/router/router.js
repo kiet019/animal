@@ -5,6 +5,7 @@ import Signup from "../page/signup";
 import { Routes, Route } from "react-router-dom";
 import BuyTicket from "../page/buy-ticket";
 import Cart from "../page/cart";
+import Dashboard from "../page/staff/dashboard";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/sign-up" element={<Signup />} />
       <Route path="/buy-ticket" element={<BuyTicket />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/staff/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
