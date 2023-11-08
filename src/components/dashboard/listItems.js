@@ -10,16 +10,26 @@ import PetsIcon from "@mui/icons-material/Pets";
 import StoreIcon from "@mui/icons-material/Store";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import SetMealIcon from "@mui/icons-material/SetMeal";
+import { useNavigate } from "react-router-dom";
 export const MainListItems = () => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          navigate("/staff/dashboard");
+        }}
+      >
         <ListItemIcon>
           <PetsIcon />
         </ListItemIcon>
         <ListItemText primary="Animal" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          navigate("/staff/habitat");
+        }}
+      >
         <ListItemIcon>
           <StoreIcon />
         </ListItemIcon>
